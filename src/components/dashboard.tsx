@@ -129,19 +129,6 @@ const Dashboard = () => {
     tokenClient.requestAccessToken();
   };
 
-  // Handle sign out
-  const handleSignOut = () => {
-    const token = window.gapi.client.getToken();
-    if (token !== null) {
-      window.google?.accounts.oauth2.revoke(token.access_token, () => {
-        window.gapi.client.setToken(null);
-        sessionStorage.removeItem('gapi_token');
-        setIsSignedIn(false);
-        setData(null);
-      });
-    }
-  };
-
   // Fetch sheet data
   const fetchSheetData = async () => {
     try {
@@ -244,14 +231,6 @@ const Dashboard = () => {
         <div className="rounded-lg p-6">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-2xl font-bold text-gray-900">The Residency</h1>
-            {isSignedIn && (
-              <button
-                onClick={handleSignOut}
-                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors"
-              >
-                Sign Out
-              </button>
-            )}
           </div>
 
           {isLoading ? (
