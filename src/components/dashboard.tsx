@@ -18,6 +18,8 @@ const Dashboard = () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isGapiLoaded, setIsGapiLoaded] = useState(false);
 
+  const showRawData = location.search.includes('show_data');
+
   // Step 1: Load GAPI Script
   useEffect(() => {
     const loadGapiScript = () => {
@@ -276,12 +278,14 @@ const Dashboard = () => {
               />
 
               {/* Raw Data Card */}
-              <div className="bg-gray-50 rounded-lg p-6 col-span-2">
-                <h2 className="text-xl font-semibold mb-4">Raw Data</h2>
-                <pre className="overflow-auto">
-                  {JSON.stringify(data, null, 2)}
-                </pre>
-              </div>
+              {showRawData && (
+                <div className="bg-gray-50 rounded-lg p-6 col-span-2">
+                  <h2 className="text-xl font-semibold mb-4">Raw Data</h2>
+                  <pre className="overflow-auto">
+                    {JSON.stringify(data, null, 2)}
+                  </pre>
+                </div>
+              )}
             </div>
           )}
         </div>
