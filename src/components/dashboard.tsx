@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import RankingCard from './rankingcard';
 
 declare global {
   interface Window {
@@ -242,7 +243,7 @@ const Dashboard = () => {
       <div className="max-w-7xl mx-auto">
         <div className="rounded-lg p-6">
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-gray-900">Sheet Data</h1>
+            <h1 className="text-2xl font-bold text-gray-900">The Residency</h1>
             {isSignedIn && (
               <button
                 onClick={handleSignOut}
@@ -277,82 +278,23 @@ const Dashboard = () => {
               {error}
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-4">
-              {/* Users by Location Card */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">Users by Location</h2>
-                <div className="space-y-2">
-                  {processLocationData(data, 'how many total users do you have?').map(({ location, count }, index) => (
-                    <div
-                      key={location}
-                      className="flex items-center justify-between p-3 bg-white rounded-md shadow-sm"
-                    >
-                      <div className="flex items-center">
-                        <span className="w-8 font-bold text-gray-500">{index + 1}.</span>
-                        <span> {location} </span>
-                        <span className="font-semibold text-gray-700">{count}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* MRR by Location Card */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">MRR by Location</h2>
-                <div className="space-y-2">
-                  {processLocationData(data, 'what is your mrr right now? ($)').map(({ location, count }, index) => (
-                    <div
-                      key={location}
-                      className="flex items-center justify-between p-3 bg-white rounded-md shadow-sm"
-                    >
-                      <div className="flex items-center">
-                        <span className="w-8 font-bold text-gray-500">{index + 1}.</span>
-                        <span> {location} </span>
-                        <span className="font-semibold text-gray-700">${count.toLocaleString()}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Valuation by Location Card */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">Valuation by Location</h2>
-                <div className="space-y-2">
-                  {processLocationData(data, 'what is your current valuation? ($)').map(({ location, count }, index) => (
-                    <div
-                      key={location}
-                      className="flex items-center justify-between p-3 bg-white rounded-md shadow-sm"
-                    >
-                      <div className="flex items-center">
-                        <span className="w-8 font-bold text-gray-500">{index + 1}.</span>
-                        <span> {location} </span>
-                        <span className="font-semibold text-gray-700">${count.toLocaleString()}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Raised Amount by Location Card */}
-              <div className="bg-gray-50 rounded-lg p-6">
-                <h2 className="text-xl font-semibold mb-4">Raised Amount by Location</h2>
-                <div className="space-y-2">
-                  {processLocationData(data, 'how much money have you raised? (investment $)', 'sum').map(({ location, count }, index) => (
-                    <div
-                      key={location}
-                      className="flex items-center justify-between p-3 bg-white rounded-md shadow-sm"
-                    >
-                      <div className="flex items-center">
-                        <span className="w-8 font-bold text-gray-500">{index + 1}.</span>
-                        <span> {location} </span>
-                        <span className="font-semibold text-gray-700">${count.toLocaleString()}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="grid grid-cols-4 gap-4">
+              <RankingCard
+                title="Users"
+                data={processLocationData(data, 'how many total users do you have?')}
+              />
+              <RankingCard
+                title="MRR"
+                data={processLocationData(data, 'what is your mrr right now? ($)')}
+              />
+              <RankingCard
+                title="Valuation"
+                data={processLocationData(data, 'what is your current valuation? ($)')}
+              />
+              <RankingCard
+                title="Raised Amount"
+                data={processLocationData(data, 'how much money have you raised? (investment $)', 'sum')}
+              />
 
               {/* Raw Data Card */}
               <div className="bg-gray-50 rounded-lg p-6 col-span-2">
